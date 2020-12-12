@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -12,7 +13,8 @@ public class TargetMover: MonoBehaviour {
 
     [Tooltip("The speed by which the object moves towards the target, in meters (=grid units) per second")]
     [SerializeField] float speed = 2f;
-
+    [Tooltip("Wether to adjust speed of the player according to the current tile it walks on")]
+    [SerializeField] bool useWeightAsSpeed = false;
     [Tooltip("Maximum number of iterations before BFS algorithm gives up on finding a path")]
     [SerializeField] int maxIterations = 1000;
 
@@ -47,6 +49,19 @@ public class TargetMover: MonoBehaviour {
 
     IEnumerator MoveTowardsTheTarget() {
         for(;;) {
+            int currentWeight = 1; //Default weight
+            if (useWeightAsSpeed)
+            {
+                //Convert transform.position to Vector3Int
+                Vector3Int vec = new Vector3Int((int)Math.Floor(transform.position.x), 
+                    (int)Math.Floor(transform.position.y), (int)Math.Floor(transform.position.z));
+                TileBase playerTile = tilemap.GetTile(vec);//Get player current
+
+                currentWeight = AllowedTiles.GetWeight(playerTile);
+            }
+
+            timeBetweenSteps = 1 / (speed / currentWeight);
+
             yield return new WaitForSeconds(timeBetweenSteps);
             if (enabled && !atTarget)
                 MakeOneStepTowardsTheTarget();
