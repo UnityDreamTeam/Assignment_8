@@ -14,8 +14,8 @@ public class Carve : MonoBehaviour
     [SerializeField] Tilemap tilemap = null;
     [SerializeField] AllowedTiles allowedTiles = null;
 
-    [Tooltip("timeToCarve")]
-    [SerializeField] float time = 0.8f;
+    [Tooltip("Time to carve")]
+    [SerializeField] float timeToCarve = 0.8f;
 
 
     // Start is called before the first frame update
