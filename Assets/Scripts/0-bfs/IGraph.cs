@@ -10,4 +10,5 @@
  */
 public interface IGraph<T> {
     IEnumerable<T> Neighbors(T node);
+    IEnumerable<Edge> Edges(T node);
 }
