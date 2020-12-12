@@ -14,7 +14,7 @@ public class Carve : MonoBehaviour
     [SerializeField] Tilemap tilemap = null;
     [SerializeField] AllowedTiles allowedTiles = null;
 
-    [Tooltip("Time to carves")]
+    [Tooltip("timeToCarve")]
     [SerializeField] float time = 0.8f;
 
 
@@ -30,8 +30,7 @@ public class Carve : MonoBehaviour
         if (Input.GetButton("X"))
         {
             carveTil();
-        }
-        
+        }  
     }
 
 
@@ -86,7 +85,6 @@ public class Carve : MonoBehaviour
         Vector3Int cellPosition = tilemap.WorldToCell(worldPosition);
         return tilemap.GetTile(cellPosition);
     }
-
 
     IEnumerator carveCoroutine(Vector3 targetTile)
     {
