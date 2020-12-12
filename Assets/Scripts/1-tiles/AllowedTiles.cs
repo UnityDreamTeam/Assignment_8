@@ -12,7 +12,7 @@ public class AllowedTiles : MonoBehaviour  {
     [SerializeField] int[] weights = null; //Weight for each different tile (how slow movement is)
     static Dictionary<TileBase, int> map;
 
-    private void Start()
+    private void Awake()
     {
         map = new Dictionary<TileBase, int>();
         for (int i = 0; i < weights.Length; i++)
