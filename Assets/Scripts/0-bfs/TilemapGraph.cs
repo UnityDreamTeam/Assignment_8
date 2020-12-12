@@ -30,4 +30,18 @@ public class TilemapGraph: IGraph<Vector3Int> {
                 yield return neighborPos;
         }
     }
+
+    public IEnumerable<Edge> Edges(Vector3Int node)
+    {
+        foreach (var direction in directions)
+        {
+            Vector3Int neighborPos = node + direction;
+            TileBase neighborTile = tilemap.GetTile(neighborPos);
+            if (allowedTiles.Contains(neighborTile))
+            {
+                int neighborWeight = AllowedTiles.GetWeight(neighborTile);
+                yield return new Edge(neighborPos, neighborWeight);
+            }
+        }
+    }
 }
