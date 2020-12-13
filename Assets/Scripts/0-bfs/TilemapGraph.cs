@@ -39,9 +39,16 @@ public class TilemapGraph: IGraph<Vector3Int> {
             TileBase neighborTile = tilemap.GetTile(neighborPos);
             if (allowedTiles.Contains(neighborTile))
             {
-                int neighborWeight = AllowedTiles.GetWeight(neighborTile);
+                int neighborWeight = GetWeight(neighborTile);
                 yield return new Edge(neighborPos, neighborWeight);
             }
         }
+    }
+
+    private int GetWeight(TileBase neighborTile)
+    {
+        GameObject allowedObject = GameObject.Find("AllowedTiles");
+        AllowedTiles allowed = allowedObject.GetComponent<AllowedTiles>();
+        return allowed.GetWeight(neighborTile);
     }
 }

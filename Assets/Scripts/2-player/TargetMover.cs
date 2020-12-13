@@ -57,7 +57,7 @@ public class TargetMover: MonoBehaviour {
                     (int)Math.Floor(transform.position.y), (int)Math.Floor(transform.position.z));
                 TileBase playerTile = tilemap.GetTile(vec);//Get player current
 
-                currentWeight = AllowedTiles.GetWeight(playerTile);
+                currentWeight = allowedTiles.GetWeight(playerTile);
             }
 
             timeBetweenSteps = 1 / (speed / currentWeight);
