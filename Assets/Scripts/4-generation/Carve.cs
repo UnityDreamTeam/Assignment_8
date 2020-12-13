@@ -88,7 +88,7 @@ public class Carve : MonoBehaviour
 
     IEnumerator carveCoroutine(Vector3 targetTile)
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(timeToCarve);
         checkTile(targetTile);
     }
 }
