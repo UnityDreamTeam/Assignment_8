@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Dijkstra
+public class Dijkstra<NodeType> : IPathFinder<NodeType>
 {
-	private static void ConstructPath(List<Node> distances, Vector3Int startNode, Node end_node,  List<Vector3Int> outputPath)
+	private void ConstructPath(List<Node<NodeType>> distances, NodeType startNode, Node<NodeType> end_node,  List<NodeType> outputPath)
     {
 		//Construct the path at the end
 		while (!end_node.Position.Equals(startNode))
 		{
 			outputPath.Add(end_node.Position);
 			//Jump to the father
-			Vector3Int father = end_node.Father;
+			NodeType father = end_node.Father;
 			for (int j = 0; j < distances.Count; j++)
 			{
 				if (distances[j].Position.Equals(father))
@@ -25,22 +26,24 @@ public class Dijkstra
 		outputPath.Add(startNode);//Add the source node also
 		outputPath.Reverse();
 	}
-	private static void FindPath(
-            IGraph<Vector3Int> graph,
-			Vector3Int startNode, Vector3Int endNode,
-            List<Vector3Int> outputPath, int maxiterations = 1000)
+	private void FindPath(
+            IGraph<NodeType> graph,
+			NodeType startNode, NodeType endNode,
+            List<NodeType> outputPath, int maxiterations = 1000)
     {
 		//Used to insert new nodes into the dynamic list of vertexes
-		HashSet<Vector3Int> closedSet = new HashSet<Vector3Int>();
+		HashSet<NodeType> closedSet = new HashSet<NodeType>();
 
 		//List of dynamicly generated nodes with their distances
-		List<Node> nodes = new List<Node>();
+		List<Node<NodeType>> nodes = new List<Node<NodeType>>();
 
 		//Priority Queue to remove every iteration the neighbor with smallest weight
-		List<Node> pq = new List<Node>();
+		List<Node<NodeType>> pq = new List<Node<NodeType>>();
 
 		//Initialize the current node to be starting node. it has no father and distance to itself is zero
-		Node currentNode = new Node(startNode, 0, new Vector3Int(int.MaxValue, int.MaxValue, int.MaxValue));
+		NodeType father = (NodeType)Activator.CreateInstance(typeof(NodeType), int.MaxValue, int.MaxValue, int.MaxValue);
+		Node<NodeType> currentNode = new Node<NodeType>(startNode, 0, father);
+
 		//Add the first node to the list of existing nodes.
 		nodes.Add(currentNode);
 
@@ -51,7 +54,8 @@ public class Dijkstra
 			{
 				if (!closedSet.Contains(neighbor))
 				{
-					Node newNode = new Node(neighbor, int.MaxValue, new Vector3Int(int.MaxValue, int.MaxValue, int.MaxValue));
+					father = (NodeType)Activator.CreateInstance(typeof(NodeType), int.MaxValue, int.MaxValue, int.MaxValue);
+					Node<NodeType> newNode = new Node<NodeType>(neighbor, int.MaxValue, father);
 					nodes.Add(newNode);
 					pq.Add(newNode);
 
@@ -63,7 +67,7 @@ public class Dijkstra
 			foreach (var edge in graph.Edges(currentNode.Position))
 			{
 				//Find the other node
-				Node otherNode = null;
+				Node<NodeType> otherNode = null;
 				for (int j = 0; j < nodes.Count; j++)
 				{
 					if (edge.Other.Equals(nodes[j].Position))
@@ -86,7 +90,7 @@ public class Dijkstra
 				if(item != null)
                 {
 					pq.Remove(item);
-					pq.Add(new Node(otherNode));
+					pq.Add(new Node<NodeType>(otherNode));
 				}
 			}
 
@@ -106,9 +110,9 @@ public class Dijkstra
 		}
 	}
 
-    public static List<Vector3Int> GetPath(IGraph<Vector3Int> graph, Vector3Int startNode, Vector3Int endNode, int maxiterations = 1000)
+    public List<NodeType> GetPath(IGraph<NodeType> graph, NodeType startNode, NodeType endNode, int maxiterations = 1000)
     {
-        List<Vector3Int> path = new List<Vector3Int>();
+        List<NodeType> path = new List<NodeType>();
         FindPath(graph, startNode, endNode, path, maxiterations);
         return path;
     }

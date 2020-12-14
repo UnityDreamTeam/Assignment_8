@@ -15,6 +15,8 @@ public class TargetMover: MonoBehaviour {
     [SerializeField] float speed = 2f;
     [Tooltip("Wether to adjust speed of the player according to the current tile it walks on")]
     [SerializeField] bool useWeightAsSpeed = false;
+    [Tooltip("True to use dijkstra, false to use BFS")]
+    [SerializeField] bool useDijkstra = false;
     [Tooltip("Maximum number of iterations before BFS algorithm gives up on finding a path")]
     [SerializeField] int maxIterations = 1000;
 
@@ -25,6 +27,7 @@ public class TargetMover: MonoBehaviour {
     [SerializeField] Vector3Int targetInGrid;
 
     protected bool atTarget;  // This property is set to "true" whenever the object has already found the target.
+    IPathFinder<Vector3Int> pathFinder; //This property uses to choose path finding algorithm at runtime
 
     public void SetTarget(Vector3 newTarget) {
         if (targetInWorld != newTarget) {
@@ -41,7 +44,21 @@ public class TargetMover: MonoBehaviour {
     private TilemapGraph tilemapGraph = null;
     private float timeBetweenSteps;
 
+    //The usage of onValidate function is very effective instead of keep polling in while true loop
+    private void OnValidate()
+    {
+        if (useDijkstra)
+        {
+            pathFinder = new Dijkstra<Vector3Int>();
+        }
+        else
+        {
+            pathFinder = new BFS<Vector3Int>();
+        }
+    }
     protected virtual void Start() {
+        pathFinder = new BFS<Vector3Int>();//Initialize to BFS algorithm
+
         tilemapGraph = new TilemapGraph(tilemap, allowedTiles.Get());
         timeBetweenSteps = 1 / speed;
         StartCoroutine(MoveTowardsTheTarget());
@@ -71,8 +88,10 @@ public class TargetMover: MonoBehaviour {
     private void MakeOneStepTowardsTheTarget() {
         Vector3Int startNode = tilemap.WorldToCell(transform.position);
         Vector3Int endNode = targetInGrid;
-        List<Vector3Int> shortestPath = Dijkstra.GetPath(tilemapGraph, startNode, endNode, maxIterations);
-        //List<Vector3Int> shortestPath = BFS.GetPath(tilemapGraph, startNode, endNode, maxIterations);
+
+        //A beautiful abstraction :)
+        List<Vector3Int> shortestPath = pathFinder.GetPath(tilemapGraph, startNode, endNode, maxIterations);
+
         Debug.Log("shortestPath = " + string.Join(" , ",shortestPath));
         if (shortestPath.Count >= 2) {
             Vector3Int nextNode = shortestPath[1];

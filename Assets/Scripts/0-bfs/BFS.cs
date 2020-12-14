@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 /**
  * A generic implementation of the BFS algorithm.
  * @author Erel Segal-Halevi
  * @since 2020-02
  */
-public class BFS {
+public class BFS<NodeType> : IPathFinder<NodeType>
+{
 
-    public static void FindPath<NodeType>(
+    private void FindPath(
             IGraph<NodeType> graph, 
             NodeType startNode, NodeType endNode, 
             List<NodeType> outputPath, int maxiterations=1000)
@@ -46,10 +48,9 @@ public class BFS {
         }
     }
 
-    public static List<NodeType> GetPath<NodeType>(IGraph<NodeType> graph, NodeType startNode, NodeType endNode, int maxiterations=1000) {
+    public List<NodeType> GetPath(IGraph<NodeType> graph, NodeType startNode, NodeType endNode, int maxiterations=1000) {
         List<NodeType> path = new List<NodeType>();
         FindPath(graph, startNode, endNode, path, maxiterations);
         return path;
     }
-
 }
