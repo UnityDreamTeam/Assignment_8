@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Dijkstra
+public class Dijkstra<NodeType> : IPathFinder<NodeType>
 {
-	private static void ConstructPath<NodeType>(List<Node<NodeType>> distances, NodeType startNode, Node<NodeType> end_node,  List<NodeType> outputPath)
+	private void ConstructPath(List<Node<NodeType>> distances, NodeType startNode, Node<NodeType> end_node,  List<NodeType> outputPath)
     {
 		//Construct the path at the end
 		while (!end_node.Position.Equals(startNode))
@@ -26,7 +26,7 @@ public class Dijkstra
 		outputPath.Add(startNode);//Add the source node also
 		outputPath.Reverse();
 	}
-	private static void FindPath<NodeType>(
+	private void FindPath(
             IGraph<NodeType> graph,
 			NodeType startNode, NodeType endNode,
             List<NodeType> outputPath, int maxiterations = 1000)
@@ -110,7 +110,7 @@ public class Dijkstra
 		}
 	}
 
-    public static List<NodeType> GetPath<NodeType>(IGraph<NodeType> graph, NodeType startNode, NodeType endNode, int maxiterations = 1000)
+    public List<NodeType> GetPath(IGraph<NodeType> graph, NodeType startNode, NodeType endNode, int maxiterations = 1000)
     {
         List<NodeType> path = new List<NodeType>();
         FindPath(graph, startNode, endNode, path, maxiterations);
