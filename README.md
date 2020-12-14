@@ -10,4 +10,5 @@ We added Dijkstra algorithm in order to find the shortest path to the destinatio
 
 ## Dijkstra algorithm VS BFS
 Here you can see how the players is moving while using BFS algorithm vs while using Dijkstra algorithm.
-You can notice that when we add weights, Dijkstra algorithm will pick a shorter path then BFS does.
+You can notice that when we add weights, Dijkstra algorithm will pick a **shorter** path then BFS does.  
+![dijkstra-vs-bfs](https://user-images.githubusercontent.com/73671381/102148411-0d4a4900-3e75-11eb-91fb-8eabedece1aa.gif)  
