@@ -44,6 +44,7 @@ public class TargetMover: MonoBehaviour {
     private TilemapGraph tilemapGraph = null;
     private float timeBetweenSteps;
 
+    //The usage of onValidate function is very effective instead of keep polling in while true loop
     private void OnValidate()
     {
         if (useDijkstra)
