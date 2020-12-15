@@ -49,3 +49,8 @@ private void OnValidate()
     }
 ```
 This function will be called as a callback, once we made a change on unity editor.
+
+
+#The player carve into tile that we can't walk into 
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/57867818/102248422-d3775200-3f09-11eb-98d1-751d83e65fe7.gif)
+
