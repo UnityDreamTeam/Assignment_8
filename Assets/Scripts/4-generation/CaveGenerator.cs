@@ -1,18 +1,20 @@
 using System;
-
+using System.Linq;
+using UnityEngine;
+using Random = UnityEngine.Random;
 /**
- * This class is used to generate a random "cave" map.
- * The map is generated as a two-dimensional array of ints, where "0" denotes floor and "1" denotes wall.
- * Initially, the boundaries of the cave are set to "wall", and the inner cells are set at random.
- * Then, a cellular automaton is run in order to smooth out the cave.
- * 
- * Based on Unity tutorial https://www.youtube.com/watch?v=v7yyZZjF1z4 
- * Code by Habrador: https://github.com/Habrador/Unity-Programming-Patterns/blob/master/Assets/Patterns/7.%20Double%20Buffer/Cave/GameController.cs
- * Using a double-buffer technique explained here: https://github.com/Habrador/Unity-Programming-Patterns#7-double-buffer
- * 
- * Adapted by: Erel Segal-Halevi
- * Since: 2020-12
- */
+* This class is used to generate a random "cave" map.
+* The map is generated as a two-dimensional array of ints, where "0" denotes floor and "1" denotes wall.
+* Initially, the boundaries of the cave are set to "wall", and the inner cells are set at random.
+* Then, a cellular automaton is run in order to smooth out the cave.
+* 
+* Based on Unity tutorial https://www.youtube.com/watch?v=v7yyZZjF1z4 
+* Code by Habrador: https://github.com/Habrador/Unity-Programming-Patterns/blob/master/Assets/Patterns/7.%20Double%20Buffer/Cave/GameController.cs
+* Using a double-buffer technique explained here: https://github.com/Habrador/Unity-Programming-Patterns#7-double-buffer
+* 
+* Adapted by: Erel Segal-Halevi
+* Since: 2020-12
+*/
 public class CaveGenerator {
     //Used to init the cellular automata by spreading random dots on a grid,
     //and from these dots we will generate caves.
@@ -56,9 +58,10 @@ public class CaveGenerator {
                 if (x == 0 || x == gridSize - 1 || y == 0 || y == gridSize - 1) {
                     //We dont want holes in our walls, so the border is always a wall
                     bufferOld[x, y] = 1;
-                } else {
+                }                
+                else {
                     //Random walls and caves
-                    bufferOld[x, y] = random.NextDouble() < randomFillPercent ? 1 : 0;
+                    bufferOld[x, y] = Random.Range(0, 4);
                 }
             }
         }
@@ -77,18 +80,8 @@ public class CaveGenerator {
                     bufferNew[x, y] = 1;
                     continue;
                 }
-
-                //Uses bufferOld to get the wall count
-                int surroundingWalls = GetSurroundingWallCount(x, y);
-
-                //Use some smoothing rules to generate caves
-                if (surroundingWalls > 4) {
-                    bufferNew[x, y] = 1;
-                } else if (surroundingWalls == 4) {
-                    bufferNew[x, y] = bufferOld[x, y];
-                } else {
-                    bufferNew[x, y] = 0;
-                }
+                bufferNew[x, y] = SurroundingCheck(x, y);
+                Console.WriteLine(bufferNew[x, y]);
             }
         }
 
@@ -96,25 +89,37 @@ public class CaveGenerator {
         (bufferOld, bufferNew) = (bufferNew, bufferOld);
     }
 
-
-
-    //Given a cell, how many of the 8 surrounding cells are walls?
-    private int GetSurroundingWallCount(int cellX, int cellY) {
-        int wallCounter = 0;
-        for (int neighborX = cellX - 1; neighborX <= cellX + 1; neighborX ++) {
-            for (int neighborY = cellY - 1; neighborY <= cellY + 1; neighborY++) {
-                //We dont need to care about being outside of the grid because we are never looking at the border
-                //This is the cell itself and no neighbor!
-                if (neighborX == cellX && neighborY == cellY) {
+    // Check which tile is more common around cell [x, y] and change it to match the majority if needed.
+    private int SurroundingCheck(int cellX, int cellY)
+    {
+        int[] countTiles = { 0, 0, 0, 0};
+        for (int i = cellX - 1; i < cellX + 2; i++)
+        {
+            for (int j = cellY - 1; j < cellY + 2; j++)
+            {
+                if (i == cellX && j == cellY)
                     continue;
-                }
-
-                //This neighbor is a wall
-                if (bufferOld[neighborX, neighborY] == 1) {
-                    wallCounter += 1;
+                else
+                {
+                    switch(bufferOld[i, j])
+                    {
+                        case 0: countTiles[0]++; break;
+                        case 1: countTiles[1]++; break;
+                        case 2: countTiles[2]++; break;
+                        case 3: countTiles[3]++; break;
+                    }
                 }
             }
         }
-        return wallCounter;
+        // If the tile has at least three similar tiles around - do not change it.
+        if (countTiles[bufferOld[cellX, cellY]] > 3)
+            return bufferOld[cellX, cellY];
+        // If there is more common tile kind around - change it to the same tile value.
+        else
+        {
+            int max = countTiles.Max();
+            int maxIndex = countTiles.ToList().IndexOf(max);
+            return maxIndex;
+        }
     }
 }
