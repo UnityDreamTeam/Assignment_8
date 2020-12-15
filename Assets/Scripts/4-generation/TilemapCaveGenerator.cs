@@ -13,17 +13,7 @@ using System.Collections;
 public class TilemapCaveGenerator: MonoBehaviour {
     [SerializeField] Tilemap tilemap = null;
 
-    [Tooltip("The tile that represents a wall (an impassable block)")]
-    [SerializeField] TileBase wallTile = null;
-
-    [Tooltip("The tile that represents a floor (a passable block)")]
-    [SerializeField] TileBase floorTile = null;
-
-    [Tooltip("The tile that represents a wall (an impassable block)")]
-    [SerializeField] TileBase waterTile = null;
-
-    [Tooltip("The tile that represents a wall (an impassable block)")]
-    [SerializeField] TileBase forestTile = null;
+    [SerializeField] TileBase[] tiles;
 
     [Tooltip("The percent of walls in the initial random map")]
     [Range(0, 1)]
@@ -76,16 +66,8 @@ public class TilemapCaveGenerator: MonoBehaviour {
     private void GenerateAndDisplayTexture(int[,] data) {
         for (int y = 0; y < gridSize; y++) {
             for (int x = 0; x < gridSize; x++) {
-                var position = new Vector3Int(x, y, 0);
-                var tile = floorTile;              
-                switch (data[x, y])
-                {
-                    case 0: tile = floorTile; break;
-                    case 1: tile = wallTile; break;
-                    case 2: tile = waterTile; break;
-                    case 3: tile = forestTile; break;
-                }
-                tilemap.SetTile(position, tile);
+                var position = new Vector3Int(x, y, 0); 
+                tilemap.SetTile(position, tiles[data[x, y]]);
             }
         }
     }

@@ -23,7 +23,8 @@ public class CaveGenerator {
 
     //The height and length of the grid
     protected int gridSize;
-
+    readonly int tileNumber = 4;       // Number of tiles
+    readonly int areaMinNeighbors = 3; // Minimum neighbors in order to form an area
     //The double buffer
     private int[,] bufferOld;
     private int[,] bufferNew;
@@ -61,7 +62,7 @@ public class CaveGenerator {
                 }                
                 else {
                     //Random walls and caves
-                    bufferOld[x, y] = Random.Range(0, 4);
+                    bufferOld[x, y] = Random.Range(0, tileNumber);
                 }
             }
         }
@@ -81,7 +82,6 @@ public class CaveGenerator {
                     continue;
                 }
                 bufferNew[x, y] = SurroundingCheck(x, y);
-                Console.WriteLine(bufferNew[x, y]);
             }
         }
 
@@ -100,19 +100,11 @@ public class CaveGenerator {
                 if (i == cellX && j == cellY)
                     continue;
                 else
-                {
-                    switch(bufferOld[i, j])
-                    {
-                        case 0: countTiles[0]++; break;
-                        case 1: countTiles[1]++; break;
-                        case 2: countTiles[2]++; break;
-                        case 3: countTiles[3]++; break;
-                    }
-                }
+                    countTiles[bufferOld[i, j]]++;                    
             }
         }
         // If the tile has at least three similar tiles around - do not change it.
-        if (countTiles[bufferOld[cellX, cellY]] > 3)
+        if (countTiles[bufferOld[cellX, cellY]] > areaMinNeighbors)
             return bufferOld[cellX, cellY];
         // If there is more common tile kind around - change it to the same tile value.
         else
