@@ -60,5 +60,5 @@ The player carves a tile in order to move forward and pave new ways.
 In this section we have improved the map generator/cave generator of the original project mentioned above.
 Originally, the method produced a cave-like map built from two kinds of tiles. Our improvement is to add 2 more tiles into the map, and by that adding additional diversity and interest to the game.
 The tiles will spread around the map and gradually come closer toward similar tiles which will make them together to look like an area.  
-![CaveGeneratorGIF](https://user-images.githubusercontent.com/44766214/102251696-d4aa7e00-3f0d-11eb-99c9-6c20e9765119.gif)
+![CaveGeneratorGIFCloseup](https://user-images.githubusercontent.com/44766214/102263614-39210980-3f1d-11eb-8414-d2cd49dc50ac.gif)
 
