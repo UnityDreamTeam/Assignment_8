@@ -51,13 +51,14 @@ private void OnValidate()
 This function will be called as a callback, once we made a change on unity editor.
 
 
-## The player "carve" a tile that we can't walk into  
+## Carving
+The player carves a tile in order to move forward and pave new ways.  
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/57867818/102248422-d3775200-3f09-11eb-98d1-751d83e65fe7.gif)
 
 ## Map Generator
-![CaveGeneratorGIF](https://user-images.githubusercontent.com/44766214/102251696-d4aa7e00-3f0d-11eb-99c9-6c20e9765119.gif)
 
-In this section we have improved the map generator / cave generator method of the original project mentioned above.
-Originally the method produced a cave-like map built from two kinds of tile. Our improvement adds 2 more tiles into the map which creates diversity and interest to the game.
-The tiles will spread around the map and gradually come closer toward similar tiles which will make them together look like an area.
+In this section we have improved the map generator/cave generator of the original project mentioned above.
+Originally, the method produced a cave-like map built from two kinds of tiles. Our improvement is to add 2 more tiles into the map, and by that adding additional diversity and interest to the game.
+The tiles will spread around the map and gradually come closer toward similar tiles which will make them together to look like an area.  
+![CaveGeneratorGIF](https://user-images.githubusercontent.com/44766214/102251696-d4aa7e00-3f0d-11eb-99c9-6c20e9765119.gif)
 
