@@ -626,6 +626,8 @@ MonoBehaviour:
   tilemap: {fileID: 931517250}
   wallTile: {fileID: 11400000, guid: 546c35550ead79941af5f505fdd175ec, type: 2}
   floorTile: {fileID: 11400000, guid: 149fb7c95775bc842bc8f54055585274, type: 2}
+  waterTile: {fileID: 11400000, guid: ea56eece63aba35469fea812356c7a92, type: 2}
+  forestTile: {fileID: 11400000, guid: 0cea26e1a47ac8d46850becac1a6c757, type: 2}
   randomFillPercent: 0.5
   gridSize: 100
   simulationSteps: 20
@@ -678,3 +680,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 149fb7c95775bc842bc8f54055585274, type: 2}
   - {fileID: 11400000, guid: 2ad1759387b28444892c8549e6122652, type: 2}
   - {fileID: 11400000, guid: 8f2cab6dea1a2d147b231cc92eb1f7e2, type: 2}
+  weights: 

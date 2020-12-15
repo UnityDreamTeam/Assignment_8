@@ -13,11 +13,7 @@ using System.Collections;
 public class TilemapCaveGenerator: MonoBehaviour {
     [SerializeField] Tilemap tilemap = null;
 
-    [Tooltip("The tile that represents a wall (an impassable block)")]
-    [SerializeField] TileBase wallTile = null;
-
-    [Tooltip("The tile that represents a floor (a passable block)")]
-    [SerializeField] TileBase floorTile = null;
+    [SerializeField] TileBase[] tiles;
 
     [Tooltip("The percent of walls in the initial random map")]
     [Range(0, 1)]
@@ -65,14 +61,13 @@ public class TilemapCaveGenerator: MonoBehaviour {
 
 
 
-    //Generate a black or white texture depending on if the pixel is cave or wall
+    //Generate different texture depending on if the pixel is floor, wall , water or forest.
     //Display the texture on a plane
     private void GenerateAndDisplayTexture(int[,] data) {
         for (int y = 0; y < gridSize; y++) {
             for (int x = 0; x < gridSize; x++) {
-                var position = new Vector3Int(x, y, 0);
-                var tile = data[x, y] == 1 ? wallTile: floorTile;
-                tilemap.SetTile(position, tile);
+                var position = new Vector3Int(x, y, 0); 
+                tilemap.SetTile(position, tiles[data[x, y]]);
             }
         }
     }
