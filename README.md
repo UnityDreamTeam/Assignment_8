@@ -29,7 +29,7 @@ List<Vector3Int> shortestPath = pathFinder.GetPath(tilemapGraph, startNode, endN
 ```
 This interface uses as an arbitrator in code to pick path finder algorithm at run time. We don't need to know which algorithm 
 is used in order to run it. :smile:  
-If we want to add a third algorithm, for example A*, all we have to do is to implement the interface (and of course the algorithm) and the rest of the code will take care the rest. :wink:  
+If we want to add a third algorithm, for example A*, all we have to do is to implement the interface (and of course the algorithm) and the code will take care the rest. :wink:  
 We also added the ability for the user to choose the algorithm via Unity editor while playing, and we used a callback mechanism
 instead of polling the attributes in while true loop:
 ```
