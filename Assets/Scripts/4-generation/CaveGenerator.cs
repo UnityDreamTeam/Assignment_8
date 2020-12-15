@@ -23,7 +23,7 @@ public class CaveGenerator {
 
     //The height and length of the grid
     protected int gridSize;
-    readonly int tileNumber = 4;       // Number of tiles
+    readonly int amountOfTiles = 4;       
     readonly int areaMinNeighbors = 3; // Minimum neighbors in order to form an area
     //The double buffer
     private int[,] bufferOld;
@@ -62,7 +62,7 @@ public class CaveGenerator {
                 }                
                 else {
                     //Random walls and caves
-                    bufferOld[x, y] = Random.Range(0, tileNumber);
+                    bufferOld[x, y] = Random.Range(0, amountOfTiles);
                 }
             }
         }
