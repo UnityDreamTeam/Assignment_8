@@ -4,18 +4,18 @@ We added **Dijkstra** algorithm in order to find the shortest path to the destin
 
 ## Dijkstra Algorithm
 This is an example for how Dijkstra algorithm works.  
-![dijkstra-weights](https://user-images.githubusercontent.com/73671381/102028812-9a799900-3db4-11eb-9b4e-3ed866503576.gif)  
+![dijkstra-weights](https://user-images.githubusercontent.com/73671381/102279407-fdde0500-3f33-11eb-9cdf-22426f6f673e.gif)  
 
 ## Dijkstra VS BFS
 Here you can see how the players is moving while using BFS algorithm vs while using Dijkstra algorithm.
 You can notice that when we add weights, Dijkstra algorithm will pick a **shorter** path then BFS does.  
-![dijkstra-vs-bfs](https://user-images.githubusercontent.com/73671381/102148411-0d4a4900-3e75-11eb-91fb-8eabedece1aa.gif)  
+![dijkstra-vs-bfs](https://user-images.githubusercontent.com/73671381/102279390-f9195100-3f33-11eb-842c-5655fc277cb1.gif)  
 
 ## Speed And Algorithms
 Here you can see how the player speed affected when it walks on the different tiles. Each tile has a different weight
 and thus Dijkstra algorithm can pick the **fastest** path in contrast to BFS algorithm. You can easly see in the following video
 which algorithm gets the player faster to the destination.  
-![speed](https://user-images.githubusercontent.com/73671381/102149223-9dd55900-3e76-11eb-8b66-b2bc6d8676ee.gif)  
+![speed](https://user-images.githubusercontent.com/73671381/102279415-01718c00-3f34-11eb-9eab-ffda80c5eadc.gif)  
 
 ## Code & Design
 In order to create easy to extend code and preserve abstraction, we created an additional interface:  
