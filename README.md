@@ -18,3 +18,33 @@ Here you can see how the player speed affected when it walks on the different ti
 and thus Dijkstra algorithm can pick the **fastest** path in contrast to BFS algorithm. You can easly see in the following video
 which algorithm gets the player faster to the destination.  
 ![speed](https://user-images.githubusercontent.com/73671381/102149223-9dd55900-3e76-11eb-8b66-b2bc6d8676ee.gif)  
+
+## Code & Design
+In order to create easy to extend code and preserve abstraction, we created an additional interface:  
+```
+public interface IPathFinder<NodeType>
+{
+    List<NodeType> GetPath(IGraph<NodeType> graph, NodeType startNode, NodeType endNode, int maxiterations = 1000);
+}
+...
+List<Vector3Int> shortestPath = pathFinder.GetPath(tilemapGraph, startNode, endNode, maxIterations);
+```
+This interface uses as a arbitrator in code to pick path finder algorithm at run time. We don't need to know which algorithm 
+is used in order to run it. :smile:  
+If we want to add a third algorithm, for example A*, all we have to do is to implement the interface (and of course the algorithm) and the rest of the code will take care the rest. :wink:  
+We also added the ability for the user to choose the algorithm via Unity editor at runtime, and we used a callback mechanism
+instead of polling the attributes in while true loop:
+```
+private void OnValidate()
+    {
+        if (useDijkstra)
+        {
+            pathFinder = new Dijkstra<Vector3Int>();
+        }
+        else
+        {
+            pathFinder = new BFS<Vector3Int>();
+        }
+    }
+```
+This function will be called as a callback, once we made a change on unity editor.
