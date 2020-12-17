@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -29,7 +28,6 @@ public class Carve : MonoBehaviour
         {
             carveTilA();
         }
-
         carveTilB();
     }
 
