@@ -1,13 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
 public class Carve : MonoBehaviour
 {
-    [Tooltip("Button to carve")]
-    [SerializeField] KeyCode carveKey;
-
     [Tooltip("The tile change after carve")]
     [SerializeField] TileBase changeTile;
 
@@ -29,39 +27,81 @@ public class Carve : MonoBehaviour
     {
         if (Input.GetButton("X"))
         {
-            carveTil();
-        }  
+            carveTilA();
+        }
+
+        carveTilB();
+    }
+
+    private void carveTilB()
+    {
+        Vector3 targetTile = transform.position;
+        if (Input.GetButton("UP"))
+        {
+            if (Input.GetButton("X"))
+            {
+                targetTile = transform.position + Vector3.up;
+                StartCoroutine(carveCoroutine(targetTile));
+            }
+        }
+
+        if (Input.GetButton("DOWN"))
+        {
+            if (Input.GetButton("X"))
+            {
+                targetTile = transform.position + Vector3.down;
+                StartCoroutine(carveCoroutine(targetTile));
+            }
+        }
+
+        if (Input.GetButton("LEFT"))
+        {
+            if (Input.GetButton("X"))
+            {
+                targetTile = transform.position + Vector3.left;
+                StartCoroutine(carveCoroutine(targetTile));
+            }
+        }
+
+        if (Input.GetButton("RIGHT"))
+        {
+            if (Input.GetButton("X"))
+            {
+                targetTile = transform.position + Vector3.right;
+                StartCoroutine(carveCoroutine(targetTile));
+            }
+        }
     }
 
 
     /**
      * method that carve Tile 
      **/
-    void carveTil()
+    void carveTilA()
     {
         Vector3 targetTile = transform.position;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetButton("UP"))
         {
             targetTile = transform.position + Vector3.up;
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetButton("DOWN"))
         {
             targetTile = transform.position + Vector3.down;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetButton("LEFT"))
         {
             targetTile = transform.position + Vector3.left;
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetButton("RIGHT"))
         {
             targetTile = transform.position + Vector3.right;
         }
 
-        StartCoroutine(carveCoroutine(targetTile)); 
+        StartCoroutine(carveCoroutine(targetTile));
     }
 
 

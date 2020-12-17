@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 130779377}
   - component: {fileID: 130779376}
   - component: {fileID: 130779378}
-  - component: {fileID: 130779375}
   - component: {fileID: 130779379}
   m_Layer: 0
   m_Name: Player
@@ -141,24 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &130779375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 130779374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b66181536e4477479fa38aaadfc15e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemap: {fileID: 931517250}
-  allowedTiles: {fileID: 1972678413}
-  speed: 10
-  maxIterations: 1000
-  targetInWorld: {x: 0, y: 0, z: 0}
-  targetInGrid: {x: 0, y: 0, z: 0}
 --- !u!212 &130779376
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -197,7 +178,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 445804560636057897, guid: 0958ae8472e8df2449fefebb187038bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -250,10 +231,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3127a2aba137b414a823d80cfb568e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carveKey: 120
   changeTile: {fileID: 11400000, guid: 149fb7c95775bc842bc8f54055585274, type: 2}
   tilemap: {fileID: 931517250}
   allowedTiles: {fileID: 1972678413}
+  timeToCarve: 0.5
 --- !u!1 &419043803
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,8 +644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 931517250}
-  wallTile: {fileID: 11400000, guid: 546c35550ead79941af5f505fdd175ec, type: 2}
-  floorTile: {fileID: 11400000, guid: 149fb7c95775bc842bc8f54055585274, type: 2}
+  tiles: []
   randomFillPercent: 0.5
   gridSize: 100
   simulationSteps: 20
@@ -717,3 +697,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 149fb7c95775bc842bc8f54055585274, type: 2}
   - {fileID: 11400000, guid: 2ad1759387b28444892c8549e6122652, type: 2}
   - {fileID: 11400000, guid: 8f2cab6dea1a2d147b231cc92eb1f7e2, type: 2}
+  weights: 
