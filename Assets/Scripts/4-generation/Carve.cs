@@ -15,6 +15,9 @@ public class Carve : MonoBehaviour
     [SerializeField] float timeToCarve = 0.8f;
 
 
+    private Vector3[] vectors = { Vector3.up, Vector3.down, Vector3.left, Vector3.right};
+    private int notPressed = -1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,82 +27,59 @@ public class Carve : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("X"))
-        {
-            carveTilA();
-        }
-        carveTilB();
+        carveTil();
     }
 
-    private void carveTilB()
-    {
-        Vector3 targetTile = transform.position;
-        if (Input.GetButton("UP"))
-        {
-            if (Input.GetButton("X"))
-            {
-                targetTile = transform.position + Vector3.up;
-                StartCoroutine(carveCoroutine(targetTile));
-            }
-        }
-
-        if (Input.GetButton("DOWN"))
-        {
-            if (Input.GetButton("X"))
-            {
-                targetTile = transform.position + Vector3.down;
-                StartCoroutine(carveCoroutine(targetTile));
-            }
-        }
-
-        if (Input.GetButton("LEFT"))
-        {
-            if (Input.GetButton("X"))
-            {
-                targetTile = transform.position + Vector3.left;
-                StartCoroutine(carveCoroutine(targetTile));
-            }
-        }
-
-        if (Input.GetButton("RIGHT"))
-        {
-            if (Input.GetButton("X"))
-            {
-                targetTile = transform.position + Vector3.right;
-                StartCoroutine(carveCoroutine(targetTile));
-            }
-        }
-    }
 
 
     /**
      * method that carve Tile 
-     **/
-    void carveTilA()
+     */
+    void carveTil()
     {
-        Vector3 targetTile = transform.position;
+        int pressed = notPressed;
+        if (Input.GetButton("X"))
+        {
+            pressed = getIndexByMove();
+            if (pressed != notPressed)
+            {
+                StartCoroutine(carveCoroutine(transform.position + vectors[pressed]));
+            }
+        }
 
+        pressed = getIndexByMove();
+        if (pressed != notPressed)
+        {
+            if (Input.GetButton("X"))
+            {
+                StartCoroutine(carveCoroutine(transform.position + vectors[pressed]));
+            }
+        }
+    }
+
+    private int getIndexByMove()
+    {
         if (Input.GetButton("UP"))
         {
-            targetTile = transform.position + Vector3.up;
+            return 0;
         }
 
-        if (Input.GetButton("DOWN"))
+        else if (Input.GetButton("DOWN"))
         {
-            targetTile = transform.position + Vector3.down;
+            return 1;
         }
 
-        if (Input.GetButton("LEFT"))
+        else if (Input.GetButton("LEFT"))
         {
-            targetTile = transform.position + Vector3.left;
+            return 2;
         }
 
-        if (Input.GetButton("RIGHT"))
+        else if (Input.GetButton("RIGHT"))
         {
-            targetTile = transform.position + Vector3.right;
+            return 3;
         }
 
-        StartCoroutine(carveCoroutine(targetTile));
+        return notPressed;
     }
 
 
