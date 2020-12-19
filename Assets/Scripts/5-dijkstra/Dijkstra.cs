@@ -13,6 +13,8 @@ public class Dijkstra<NodeType> : IPathFinder<NodeType>
 			outputPath.Add(end_node.Position);
 			//Jump to the father
 			NodeType father = end_node.Father;
+
+			//find the father node and continue to the next node
 			for (int j = 0; j < distances.Count; j++)
 			{
 				if (distances[j].Position.Equals(father))
@@ -23,8 +25,8 @@ public class Dijkstra<NodeType> : IPathFinder<NodeType>
 			}
 		}
 
-		outputPath.Add(startNode);//Add the source node also
-		outputPath.Reverse();
+		outputPath.Add(startNode);//Add the source node of the path also
+		outputPath.Reverse();//Reverse the path, since we constructed it from end to start
 	}
 	private void FindPath(
             IGraph<NodeType> graph,
@@ -47,6 +49,7 @@ public class Dijkstra<NodeType> : IPathFinder<NodeType>
 		//Add the first node to the list of existing nodes.
 		nodes.Add(currentNode);
 
+		//Limit amount of iterations
 		for (int k = 0; k < maxiterations; ++k)
 		{
 			//Add new neighbors if we find new vertexes
@@ -114,6 +117,7 @@ public class Dijkstra<NodeType> : IPathFinder<NodeType>
     {
         List<NodeType> path = new List<NodeType>();
         FindPath(graph, startNode, endNode, path, maxiterations);
+
         return path;
     }
 }
