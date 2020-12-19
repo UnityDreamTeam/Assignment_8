@@ -16,7 +16,7 @@ public class Carve : MonoBehaviour
 
 
     private Vector3[] vectors = { Vector3.up, Vector3.down, Vector3.left, Vector3.right};
-    private int notPressed = -1;
+    private readonly int notPressed = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -37,22 +37,19 @@ public class Carve : MonoBehaviour
      */
     void carveTil()
     {
-        int pressed = notPressed;
         if (Input.GetButton("X"))
-        {
-            pressed = getIndexByMove();
-            if (pressed != notPressed)
+        { 
+            if (getIndexByMove() != notPressed)
             {
-                StartCoroutine(carveCoroutine(transform.position + vectors[pressed]));
+                StartCoroutine(carveCoroutine(transform.position + vectors[getIndexByMove()]));
             }
         }
 
-        pressed = getIndexByMove();
-        if (pressed != notPressed)
+        if (getIndexByMove() != notPressed)
         {
             if (Input.GetButton("X"))
             {
-                StartCoroutine(carveCoroutine(transform.position + vectors[pressed]));
+                StartCoroutine(carveCoroutine(transform.position + vectors[getIndexByMove()]));
             }
         }
     }
