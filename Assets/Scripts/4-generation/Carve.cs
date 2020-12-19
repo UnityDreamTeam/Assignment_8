@@ -5,9 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class Carve : MonoBehaviour
 {
-    [Tooltip("Button to carve")]
-    [SerializeField] KeyCode carveKey;
-
     [Tooltip("The tile change after carve")]
     [SerializeField] TileBase changeTile;
 
@@ -18,6 +15,9 @@ public class Carve : MonoBehaviour
     [SerializeField] float timeToCarve = 0.8f;
 
 
+    private Vector3[] vectors = { Vector3.up, Vector3.down, Vector3.left, Vector3.right};
+    private readonly int notPressed = -1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,41 +27,54 @@ public class Carve : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("X"))
-        {
-            carveTil();
-        }  
+        carveTil();
     }
-
 
     /**
      * method that carve Tile 
-     **/
+     */
     void carveTil()
     {
-        Vector3 targetTile = transform.position;
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            targetTile = transform.position + Vector3.up;
+        if (Input.GetButton("X"))
+        { 
+            if (getIndexByMove() != notPressed)
+            {
+                StartCoroutine(carveCoroutine(transform.position + vectors[getIndexByMove()]));
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (getIndexByMove() != notPressed)
         {
-            targetTile = transform.position + Vector3.down;
+            if (Input.GetButton("X"))
+            {
+                StartCoroutine(carveCoroutine(transform.position + vectors[getIndexByMove()]));
+            }
+        }
+    }
+
+    private int getIndexByMove()
+    {
+        if (Input.GetButton("UP"))
+        {
+            return 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetButton("DOWN"))
         {
-            targetTile = transform.position + Vector3.left;
+            return 1;
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetButton("LEFT"))
         {
-            targetTile = transform.position + Vector3.right;
+            return 2;
         }
 
-        StartCoroutine(carveCoroutine(targetTile)); 
+        else if (Input.GetButton("RIGHT"))
+        {
+            return 3;
+        }
+
+        return notPressed;
     }
 
 
