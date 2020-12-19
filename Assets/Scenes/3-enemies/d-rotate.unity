@@ -310,6 +310,7 @@ GameObject:
   - component: {fileID: 790962203}
   - component: {fileID: 790962206}
   - component: {fileID: 790962202}
+  - component: {fileID: 790962205}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -448,6 +449,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &790962205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790962199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3127a2aba137b414a823d80cfb568e60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeTile: {fileID: 11400000, guid: 149fb7c95775bc842bc8f54055585274, type: 2}
+  tilemap: {fileID: 931517250}
+  allowedTiles: {fileID: 1972678413}
+  timeToCarve: 0.25
 --- !u!114 &790962206
 MonoBehaviour:
   m_ObjectHideFlags: 0
